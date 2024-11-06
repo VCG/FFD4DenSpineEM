@@ -1,0 +1,9 @@
+[submodule "denspine_models/freseg_benchmark_pointnet"]
+	path = denspine_models/freseg_benchmark_pointnet
+	url = git@github.com:jasonkena/freseg_benchmark_pointnet.git
+[submodule "denspine_models/RandLA-Net-pytorch2"]
+	path = denspine_models/RandLA-Net-pytorch2
+	url = git@github.com:jasonkena/RandLA-Net-pytorch2.git
+[submodule "denspine_models/point-transformer"]
+	path = denspine_models/point-transformer
+	url = git@github.com:jasonkena/point-transformer.git
