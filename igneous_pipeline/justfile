@@ -1,0 +1,127 @@
+default:
+    just --list
+
+format:
+    black *.py
+
+precompute_human:
+    python to_precomputed.py -c configs/base.yaml -c configs/human.yaml
+
+precompute_mouse:
+    python to_precomputed.py -c configs/base.yaml -c configs/mouse.yaml
+
+precompute_seg_den:
+    python to_precomputed.py -c configs/base.yaml -c configs/seg_den.yaml
+
+precompute_all:
+    python to_precomputed.py -c configs/base.yaml -c configs/human.yaml
+    python to_precomputed.py -c configs/base.yaml -c configs/mouse.yaml
+    python to_precomputed.py -c configs/base.yaml -c configs/seg_den.yaml
+
+downsample_human:
+    python downsample.py -c configs/base.yaml -c configs/human.yaml
+
+downsample_mouse:
+    python downsample.py -c configs/base.yaml -c configs/mouse.yaml
+
+downsample_seg_den:
+    python downsample.py -c configs/base.yaml -c configs/seg_den.yaml
+
+skeletonize_human:
+    python skeletonize.py -c configs/base.yaml -c configs/human.yaml
+
+skeletonize_mouse:
+    python skeletonize.py -c configs/base.yaml -c configs/mouse.yaml
+
+skeletonize_seg_den:
+    python skeletonize.py -c configs/base.yaml -c configs/seg_den.yaml
+
+skeletonize_all:
+    python skeletonize.py -c configs/base.yaml -c configs/human.yaml
+    python skeletonize.py -c configs/base.yaml -c configs/mouse.yaml
+    python skeletonize.py -c configs/base.yaml -c configs/seg_den.yaml
+
+mesh_human:
+    python mesh.py -c configs/base.yaml -c configs/human.yaml
+
+mesh_mouse:
+    python mesh.py -c configs/base.yaml -c configs/mouse.yaml
+
+mesh_seg_den:
+    python mesh.py -c configs/base.yaml -c configs/seg_den.yaml
+
+mesh_all:
+    python mesh.py -c configs/base.yaml -c configs/human.yaml
+    python mesh.py -c configs/base.yaml -c configs/mouse.yaml
+    python mesh.py -c configs/base.yaml -c configs/seg_den.yaml
+
+# viewers are currently just dummy scripts
+viewer_human:
+    python viewer.py -c configs/base.yaml -c configs/human.yaml
+
+viewer_mouse:
+    python viewer.py -c configs/base.yaml -c configs/mouse.yaml
+
+viewer_seg_den:
+    python viewer.py -c configs/base.yaml -c configs/seg_den.yaml
+
+debug_seg_den:
+    python debug_seg_den.py -c configs/base.yaml -c configs/seg_den.yaml
+
+debug_human:
+    python debug_human.py -c configs/base.yaml -c configs/human.yaml
+
+fix_seg_den:
+    python fix_seg_den.py -c configs/base.yaml -c configs/seg_den.yaml
+
+fix_human:
+    python fix_human.py -c configs/base.yaml -c configs/human.yaml
+
+# used to extract unsharded skeletons from cloudvolume
+visualize_human:
+    python visualize.py -c configs/base.yaml -c configs/human.yaml
+
+visualize_mouse:
+    python visualize.py -c configs/base.yaml -c configs/mouse.yaml
+
+visualize_seg_den:
+    python visualize.py -c configs/base.yaml -c configs/seg_den.yaml
+
+seed_human:
+    python feature_transform.py -c configs/base.yaml -c configs/human.yaml
+
+seed_mouse:
+    python feature_transform.py -c configs/base.yaml -c configs/mouse.yaml
+
+seed_seg_den:
+    python feature_transform.py -c configs/base.yaml -c configs/seg_den.yaml
+
+pc_human:
+    python point_cloud.py -c configs/base.yaml -c configs/human.yaml
+
+pc_mouse:
+    python point_cloud.py -c configs/base.yaml -c configs/mouse.yaml
+
+pc_seg_den:
+    python point_cloud.py -c configs/base.yaml -c configs/seg_den.yaml
+
+dataloader_human:
+    python dataloader.py -c configs/base.yaml -c configs/human.yaml
+
+dataloader_mouse:
+    python dataloader.py -c configs/base.yaml -c configs/mouse.yaml
+
+dataloader_seg_den:
+    python dataloader.py -c configs/base.yaml -c configs/seg_den.yaml
+
+cache_seg_den:
+    python cache_dataloader.py -c configs/base.yaml -c configs/seg_den.yaml
+
+cache_mouse:
+    python cache_dataloader.py -c configs/base.yaml -c configs/mouse.yaml
+
+cache_human:
+    python cache_dataloader.py -c configs/base.yaml -c configs/human.yaml
+
+visualize_cached:
+    python visualize_cached.py

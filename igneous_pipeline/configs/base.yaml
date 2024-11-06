@@ -1,0 +1,98 @@
+chunk_size: [512, 512, 512]
+output_dir: "outputs"
+n_jobs_debug: 32
+n_jobs_precompute: 128
+n_jobs_downsample: 32
+n_jobs_skeletonize: 32
+n_jobs_mesh: 32
+n_jobs_touching_centroids: 32
+n_jobs_feature_transform: 8
+n_jobs_pc: 32
+n_jobs_cache: 64
+n_threads_cache: 4
+
+downsample:
+  chunk_size: [64, 64, 64] # otherwise fails to downsample some mips
+  factors:
+    - [1, 2, 2]
+    - [1, 2, 2]
+    - [2, 2, 2]
+    - [2, 2, 2]
+    - [2, 2, 2]
+    - [2, 2, 2]
+
+  # teasar_params is a list of either one dict
+  # has to be a list so omegaconf can merge
+  # teasar_params:
+  # - mip: 0
+  #   scale: ...
+#     const: ...
+#
+# or multiple elements, but ids must be specified for each
+# teasar_params:
+#   - ids: [1, 2, 3]
+#     scale: ...
+#     const: ...
+#   - id: [4, 5, 6]
+#     scale: ...
+#     const: ...
+skeletonize_trunk:
+  shape: ${chunk_size}
+  sharded: False
+  dust_threshold: 0
+  progress: True
+  parallel: 1
+  fill_missing: False
+  teasar_params:
+    - mip: 0
+      scale: 1.5
+      const: 10000
+
+skeletonize_spines:
+  shape: ${chunk_size}
+  sharded: False
+  dust_threshold: 0
+  progress: True
+  parallel: 1
+  fill_missing: False
+  teasar_params:
+    - mip: 0
+      scale: 1.5
+      const: 300
+
+skeletonize_merge:
+  crop: 0
+  magnitude: 3
+  dust_threshold: 0
+  tick_threshold: 3500
+  delete_fragments: False
+
+mesh:
+  mip: 0
+  shape: ${chunk_size}
+  sharded: False
+  progress: True
+  spatial_index: False
+  # waiting for this to resolve
+  # https://github.com/seung-lab/igneous/pull/178
+  mesh_dir: mesh
+
+mesh_merge:
+  magnitude: 3
+  mesh_dir: mesh
+
+touching_centroids:
+  connectivity: 6
+
+feature_transform:
+  # radii_multiplier: 8.0
+  radii_multiplier: 4.0
+  # radii_multiplier: 2.0
+
+point_cloud:
+  chunk_size: 4096
+
+dataloader:
+  path_length: 20000
+  num_points: 30000
+  num_threads: 8

@@ -1,0 +1,45 @@
+name: human
+anisotropy: [30, 8, 8]
+_base_dir: "/mmfs1/data/adhinart/dendrite"
+data:
+  broken_debug: ${output_dir}/${name}/broken_debug.npz
+  broken_10_png_dir: ${_base_dir}/raw/denspine_seg10
+  broken_10_png_vol: ${_base_dir}/raw/denspine_seg10_vol.h5
+  broken_10_png_vol_key: "main"
+
+  broken_raw: ${_base_dir}/raw/${name}_raw.h5
+  broken_raw_key: "main"
+  broken_spine: ${_base_dir}/raw/${name}_spine.h5
+  broken_spine_key: "main"
+  broken_seg: ${_base_dir}/raw/${name}_seg.h5
+  broken_seg_key: "main"
+
+  raw: ${_base_dir}/raw/${name}_raw_fixed.h5
+  raw_key: "main"
+  spine: ${_base_dir}/raw/${name}_spine_fixed.h5
+  spine_key: "main"
+  seg: ${_base_dir}/raw/${name}_seg_fixed.h5
+  seg_key: "main"
+
+  output_layer: ${output_dir}/${name}/output_layer
+  mapping: ${output_dir}/${name}/mapping.npy
+  touching: ${output_dir}/${name}/touching.npz
+  seed: ${output_dir}/${name}/seed.npz
+  seed_zarr: ${output_dir}/${name}/seed.zarr
+  seed_zarr_sync: ${output_dir}/${name}/seed.sync
+  feature_zarr: ${output_dir}/${name}/feature.zarr
+  feature_zarr_sync: ${output_dir}/${name}/feature.sync
+  pc_zarr: ${output_dir}/${name}/pc.zarr
+  pc_zarr_sync: ${output_dir}/${name}/pc_sync.zarr
+  pc_lengths: ${output_dir}/${name}/pc_lengths.npz
+
+dataloader:
+  folds:
+    - [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  cached:
+    - num_points: 1000000
+      path_length: 10000
+      output_dir: ${output_dir}/${name}/dataset_${dataloader.cached[0].num_points}_${dataloader.cached[0].path_length}
+    - num_points: 1000000
+      path_length: 20000
+      output_dir: ${output_dir}/${name}/dataset_${dataloader.cached[1].num_points}_${dataloader.cached[1].path_length}
