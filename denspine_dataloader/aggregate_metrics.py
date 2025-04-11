@@ -40,19 +40,22 @@ def to_regular_dict(d):
 def aggregate_metrics():
     recall_thresholds = [0.5, 0.6, 0.7, 0.8, 0.9]
 
+    BASE_PATH = "/data/adhinart/freseg/" # Andromeda1
+    # BASE_PATH = "/home/adhinart/projects/freseg2" # Andromeda2
+
     files = (
         sorted(
             glob.glob(
-                "/data/adhinart/freseg/Pointnet_Pointnet2_pytorch/log/*/*/output/metrics.npz"
+                f"{BASE_PATH}/Pointnet_Pointnet2_pytorch/log/*/*/output/metrics.npz"
             )
         )
         + sorted(
-            glob.glob(
-                "/mmfs1/data/adhinart/freseg/RandLA-Net-pytorch2/runs/*/output/metrics.npz"
-            )
+            glob.glob(f"{BASE_PATH}/RandLA-Net-pytorch2/runs/*/output/metrics.npz")
         )
-        + glob.glob(
-            "/mmfs1/data/adhinart/freseg/point-transformer/tool/exp/freseg/*/output/metrics.npz"
+        + sorted(
+            glob.glob(
+                f"{BASE_PATH}/point-transformer/tool/exp/freseg/*/output/metrics.npz"
+            )
         )
     )
 
@@ -160,7 +163,9 @@ def aggg_to_md(aggg, new_aggg):
     md = ""
     pm = "±"
 
-    md += f"## Average Results (Mean {pm} Standard Deviation)\n"
+    md += (
+        f"## Average Results:  Mean {pm} Standard Deviation (95% Confidence Interval)\n"
+    )
     md += f"| Model | Dataset | " + " | ".join(list(metrics_map.keys())) + " |\n"
     md += "| --- | --- | " + " | ".join(["---"] * len(metrics_map)) + " |\n"
     for model in models_map:
@@ -177,9 +182,12 @@ def aggg_to_md(aggg, new_aggg):
                     std = new_aggg[models_map[model]][freseg][datasets_map[dataset]][
                         metrics_map[metric]
                     ]["std"]
-                    # conf = new_aggg[model][freseg][dataset][metrics_map[metric]]["conf"]
-                    md += f"{mean:.4f} {pm} {std:.4f} | "
-                    # md += f"{mean*100:.1f} {pm} {std*100:.1f} | "
+                    conf = new_aggg[models_map[model]][freseg][datasets_map[dataset]][
+                        metrics_map[metric]
+                    ]["conf"]
+                    md += (
+                        f"{mean:.4f} {pm} {std:.4f} ({conf[0]:.4f} - {conf[1]:.4f}) | "
+                    )
                 md += "\n"
     md += "\n"
 
