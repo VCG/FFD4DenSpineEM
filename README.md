@@ -1,4 +1,6 @@
 # Frenet-Serret Frame-based Decomposition for Part Segmentation of 3D Curvilinear Structures
+## Please find the released dataset at https://huggingface.co/datasets/pytc/DenSpineEM.
+
 
 # Experiments on DenSpineEM Benchmark
 
